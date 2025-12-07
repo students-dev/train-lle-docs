@@ -1,7 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
-import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import Callout from '@/components/Callout'
 import PrevNextNav from '@/components/PrevNextNav'
 
@@ -18,12 +17,7 @@ export default async function GuidePage({ params }: { params: { slug: string[] }
       throw new Error('Empty file content')
     }
 
-    // Serialize MDX content
-    const mdxSource = await serialize(source, {
-      mdxOptions: {
-        development: process.env.NODE_ENV === 'development',
-      },
-    })
+    // MDX content will be processed by MDXRemote
 
     return (
       <div className="max-w-4xl mx-auto space-y-4 pb-20">
@@ -33,9 +27,9 @@ export default async function GuidePage({ params }: { params: { slug: string[] }
               <span className="text-white text-sm font-bold">AI</span>
             </div>
             <div className="flex-1">
-               <div className="bg-blue-50 rounded-lg p-4">
-                 <article className="prose prose-sm max-w-none text-gray-800">
-                   <MDXRemote {...mdxSource} components={{ Callout }} />
+               <div className="bg-blue-50 dark:bg-blue-950 rounded-lg p-4">
+                 <article className="prose prose-sm max-w-none text-gray-800 dark:text-gray-200 dark:prose-invert">
+                   <MDXRemote source={source} components={{ Callout }} />
                  </article>
                </div>
             </div>
