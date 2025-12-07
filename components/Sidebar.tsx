@@ -153,13 +153,13 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 p-4 hidden md:block overflow-y-auto sticky top-16 h-screen">
+    <aside className="w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 p-4 hidden md:block overflow-y-auto sticky top-16 h-screen">
       <nav className="space-y-2">
         {sections.map((section) => (
           <div key={section.title}>
             <button
               onClick={() => toggleSection(section.title)}
-              className="flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 rounded-lg"
+              className="flex items-center justify-between w-full px-3 py-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
             >
               <span>{section.title}</span>
               {openSections[section.title] ? (
@@ -174,10 +174,10 @@ export default function Sidebar() {
                   <li key={item.slug}>
                     <Link
                       href={`/guide/${item.slug}`}
-                      className={`flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 ${
+                      className={`flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 ${
                         pathname === `/guide/${item.slug}`
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'text-gray-600'
+                          ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                          : 'text-gray-600 dark:text-gray-400'
                       }`}
                     >
                       {item.title}
