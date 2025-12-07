@@ -21,7 +21,7 @@ export default function Home() {
               Get Started
             </Link>
             <a
-              href="https://github.com/sst/train-lle"
+              href="https://github.com/students-dev"
               className="border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
               target="_blank"
               rel="noopener noreferrer"

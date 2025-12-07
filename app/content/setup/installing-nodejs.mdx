@@ -1,0 +1,51 @@
+---
+title: Installing Node.js
+description: How to install Node.js for train-lle development
+---
+
+# Installing Node.js
+
+Node.js is the runtime environment required for train-lle.
+
+## Download Node.js
+
+Visit [nodejs.org](https://nodejs.org) and download the LTS version.
+
+### Windows
+1. Download the .msi installer
+2. Run the installer
+3. Follow the setup wizard
+
+### macOS
+```bash
+# Using Homebrew
+brew install node
+
+# Or download from nodejs.org
+```
+
+### Linux
+```bash
+# Ubuntu/Debian
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Or using Node Version Manager
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+nvm install --lts
+```
+
+## Verify Installation
+
+```bash
+node --version
+npm --version
+```
+
+You should see version numbers like:
+- Node.js: v18.x.x or higher
+- npm: 8.x.x or higher
+
+## Next Steps
+
+Once Node.js is installed, you can install train-lle using npm.

@@ -1,0 +1,47 @@
+---
+title: What is a Model?
+description: Understanding machine learning models in train-lle
+---
+
+# What is a Model?
+
+A model in machine learning is a mathematical representation of a real-world process that can make predictions or decisions based on input data.
+
+## Neural Networks
+
+train-lle uses neural networks as its primary model type. Neural networks are composed of:
+
+- **Layers**: Organized groups of neurons
+- **Neurons**: Individual computational units
+- **Connections**: Weighted links between neurons
+- **Activation Functions**: Non-linear transformations
+
+## Model Architecture
+
+Models are defined by their architecture:
+
+```typescript
+const model = new Model({
+  layers: [
+    { type: 'dense', units: 64, activation: 'relu' },
+    { type: 'dense', units: 32, activation: 'relu' },
+    { type: 'dense', units: 1, activation: 'sigmoid' }
+  ]
+})
+```
+
+## Training Process
+
+Models learn through:
+1. **Forward Pass**: Input data flows through the network
+2. **Loss Calculation**: Error between prediction and actual
+3. **Backpropagation**: Error gradients flow backward
+4. **Weight Updates**: Parameters adjusted to reduce error
+
+## Model Capabilities
+
+Once trained, models can:
+- Make predictions on new data
+- Classify inputs into categories
+- Generate outputs based on patterns
+- Learn complex relationships
