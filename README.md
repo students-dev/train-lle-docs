@@ -1,6 +1,6 @@
 # train-lle Documentation
 
-This is the official documentation website for [train-lle](https://github.com/students-dev), the Local Learning Engine for Node.js.
+This is the official documentation website for [train-lle](https://github.com/students-dev/train-lle), the Local Learning Engine for Node.js.
 
 ## Local Development
 
