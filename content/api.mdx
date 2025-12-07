@@ -1,0 +1,149 @@
+---
+title: API Reference
+---
+
+# API Reference
+
+Complete API documentation for train-lle.
+
+## Model
+
+The core neural network class.
+
+### Constructor
+
+```typescript
+new Model(config: ModelConfig)
+```
+
+### Methods
+
+#### predict(input: number[][]): number[][]
+
+Make predictions on input data.
+
+```typescript
+const output = model.predict([[1, 2, 3]]);
+```
+
+#### save(path: string): Promise<void>
+
+Save model to file.
+
+```typescript
+await model.save('model.lle');
+```
+
+## Trainer
+
+Handles model training.
+
+### Constructor
+
+```typescript
+new Trainer(model: Model, dataset: Dataset)
+```
+
+### Methods
+
+#### train(options: TrainOptions): Promise<void>
+
+Train the model.
+
+```typescript
+await trainer.train({
+  epochs: 100,
+  batchSize: 32,
+  learningRate: 0.01
+});
+```
+
+## Dataset
+
+Represents training data.
+
+### Constructor
+
+```typescript
+new Dataset(data: any[], options?: DatasetOptions)
+```
+
+### Methods
+
+#### shuffle(): void
+
+Randomize data order.
+
+```typescript
+dataset.shuffle();
+```
+
+#### batch(size: number): Batch[]
+
+Split data into batches.
+
+```typescript
+const batches = dataset.batch(32);
+```
+
+## Tensor
+
+Multi-dimensional array for numerical computations.
+
+### Constructor
+
+```typescript
+new Tensor(data: number[], shape: number[])
+```
+
+### Methods
+
+#### add(other: Tensor): Tensor
+
+Element-wise addition.
+
+```typescript
+const result = tensor1.add(tensor2);
+```
+
+#### matmul(other: Tensor): Tensor
+
+Matrix multiplication.
+
+```typescript
+const result = tensor1.matmul(tensor2);
+```
+
+## Optimizer
+
+Updates model parameters during training.
+
+### SGD
+
+```typescript
+const optimizer = new SGD({ learningRate: 0.01 });
+```
+
+### Adam
+
+```typescript
+const optimizer = new Adam({ learningRate: 0.001, beta1: 0.9, beta2: 0.999 });
+```
+
+## Loss
+
+Calculates prediction error.
+
+### MSE
+
+```typescript
+const loss = new MSE();
+const error = loss.calculate(predictions, targets);
+```
+
+### CrossEntropy
+
+```typescript
+const loss = new CrossEntropy();
+const error = loss.calculate(predictions, targets);
+```

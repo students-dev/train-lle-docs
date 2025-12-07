@@ -1,0 +1,66 @@
+---
+title: CLI Reference
+---
+
+# CLI Reference
+
+train-lle provides a command-line interface for common tasks.
+
+## train-lle init
+
+Initialize a new train-lle project.
+
+```bash
+train-lle init [project-name]
+```
+
+Creates a new directory with basic project structure.
+
+## train-lle train
+
+Train a model using a configuration file.
+
+```bash
+train-lle train config.json
+```
+
+Example config.json:
+```json
+{
+  "model": {
+    "layers": [
+      {"type": "dense", "units": 64, "activation": "relu"},
+      {"type": "dense", "units": 1, "activation": "linear"}
+    ]
+  },
+  "dataset": "data.csv",
+  "epochs": 100,
+  "batchSize": 32
+}
+```
+
+## train-lle test
+
+Test a trained model on new data.
+
+```bash
+train-lle test model.lle test-data.csv
+```
+
+## train-lle export
+
+Export a trained model.
+
+```bash
+train-lle export model.json model.lle
+```
+
+## train-lle stats
+
+Display training statistics.
+
+```bash
+train-lle stats model.lle
+```
+
+Shows model architecture, training history, and performance metrics.

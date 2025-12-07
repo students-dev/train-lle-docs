@@ -1,0 +1,137 @@
+---
+title: Examples
+---
+
+# Examples
+
+Practical examples to get you started with train-lle.
+
+## Tabular Regression
+
+Predict house prices from features.
+
+```typescript
+import { Model, Trainer, Dataset } from 'train-lle';
+
+// Load housing data
+const dataset = new Dataset('house-prices.csv', {
+  targetColumn: 'price'
+});
+
+// Create regression model
+const model = new Model({
+  layers: [
+    { type: 'dense', units: 64, activation: 'relu', inputShape: [13] },
+    { type: 'dense', units: 32, activation: 'relu' },
+    { type: 'dense', units: 1, activation: 'linear' }
+  ]
+});
+
+// Train the model
+const trainer = new Trainer(model, dataset, {
+  loss: 'mse',
+  optimizer: 'adam'
+});
+
+await trainer.train({ epochs: 200, batchSize: 32 });
+
+// Make predictions
+const newHouse = [3, 2.5, 1800, 2, 0, 7, 45, 5, 8, 3, 12, 300, 15];
+const predictedPrice = model.predict([newHouse]);
+console.log(`Predicted price: $${predictedPrice[0][0].toFixed(2)}`);
+```
+
+## Basic Image Classification
+
+Classify handwritten digits (MNIST-style).
+
+```typescript
+import { Model, Trainer, Dataset } from 'train-lle';
+
+// Load MNIST-like data
+const dataset = new Dataset('mnist-train.csv', {
+  targetColumn: 'label',
+  imageShape: [28, 28, 1]
+});
+
+// Create CNN model
+const model = new Model({
+  layers: [
+    { type: 'conv2d', filters: 32, kernelSize: [3, 3], activation: 'relu', inputShape: [28, 28, 1] },
+    { type: 'maxpool2d', poolSize: [2, 2] },
+    { type: 'conv2d', filters: 64, kernelSize: [3, 3], activation: 'relu' },
+    { type: 'maxpool2d', poolSize: [2, 2] },
+    { type: 'flatten' },
+    { type: 'dense', units: 128, activation: 'relu' },
+    { type: 'dense', units: 10, activation: 'softmax' }
+  ]
+});
+
+// Train with categorical cross-entropy
+const trainer = new Trainer(model, dataset, {
+  loss: 'categoricalCrossentropy',
+  optimizer: 'adam'
+});
+
+await trainer.train({ epochs: 10, batchSize: 128 });
+
+// Test on new image
+const testImage = loadImage('digit.png');
+const prediction = model.predict([testImage]);
+const predictedDigit = prediction[0].indexOf(Math.max(...prediction[0]));
+console.log(`Predicted digit: ${predictedDigit}`);
+```
+
+## Simple Text Sequence Training
+
+Predict next word in a sequence.
+
+```typescript
+import { Model, Trainer, Dataset } from 'train-lle';
+
+// Prepare text data (simplified example)
+const text = "the quick brown fox jumps over the lazy dog";
+const vocab = [...new Set(text.split(' '))];
+const vocabSize = vocab.length;
+
+// Convert text to sequences
+const sequences = [];
+for (let i = 0; i < text.length - 10; i++) {
+  const seq = text.slice(i, i + 10).split(' ').map(word => vocab.indexOf(word));
+  const next = vocab.indexOf(text.split(' ')[i + 10]);
+  sequences.push({ input: seq, output: [next] });
+}
+
+const dataset = new Dataset(sequences);
+
+// Create RNN model
+const model = new Model({
+  layers: [
+    { type: 'embedding', inputDim: vocabSize, outputDim: 50, inputLength: 9 },
+    { type: 'lstm', units: 100 },
+    { type: 'dense', units: vocabSize, activation: 'softmax' }
+  ]
+});
+
+// Train the model
+const trainer = new Trainer(model, dataset, {
+  loss: 'categoricalCrossentropy',
+  optimizer: 'adam'
+});
+
+await trainer.train({ epochs: 50, batchSize: 32 });
+
+// Generate text
+function generateText(seed, length = 10) {
+  let result = seed.split(' ');
+  for (let i = 0; i < length; i++) {
+    const input = result.slice(-9).map(word => vocab.indexOf(word));
+    const pred = model.predict([input]);
+    const nextWord = vocab[pred[0].indexOf(Math.max(...pred[0]))];
+    result.push(nextWord);
+  }
+  return result.join(' ');
+}
+
+console.log(generateText("the quick"));
+```
