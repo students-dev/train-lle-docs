@@ -1,0 +1,51 @@
+---
+title: What is train-lle?
+description: Introduction to the Local Learning Engine for Node.js
+---
+
+# What is train-lle?
+
+train-lle is a lightweight, zero-dependency machine learning library for Node.js that allows you to train neural networks entirely on your local machine. Unlike cloud-based ML services, train-lle keeps your data private and doesn't require internet connectivity.
+
+## Why It Matters
+
+In an era where data privacy is increasingly important, train-lle empowers developers to build intelligent applications without compromising user data. Whether you're building recommendation systems, image classifiers, or predictive models, train-lle makes machine learning accessible and secure.
+
+## Your First Example
+
+Here's a simple example of creating and training a basic model:
+
+```typescript
+import { Model, Dataset } from 'train-lle'
+
+// Create a simple dataset
+const data = new Dataset([
+  { input: [0, 0], output: [0] },
+  { input: [0, 1], output: [1] },
+  { input: [1, 0], output: [1] },
+  { input: [1, 1], output: [0] }
+])
+
+// Create a neural network model
+const model = new Model({
+  layers: [
+    { type: 'dense', units: 4, activation: 'relu' },
+    { type: 'dense', units: 1, activation: 'sigmoid' }
+  ]
+})
+
+// Train the model
+await model.train(data, { epochs: 100 })
+
+// Make a prediction
+const prediction = model.predict([1, 0])
+console.log(prediction) // Should be close to [1]
+```
+
+<Callout type="tip">
+Remember to install train-lle first with `npm install train-lle` before running this code.
+</Callout>
+
+## What's Next?
+
+Now that you know what train-lle is, let's explore what makes it a "Local Learning Engine" and why local ML matters.

@@ -4,97 +4,71 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ChevronRight } from 'lucide-react'
 
-const navigation = [
+const sections = [
   {
-    title: 'Getting Started',
-    href: '/docs/getting-started',
+    title: 'Introduction',
+    items: [
+      { title: 'What is train-lle?', slug: 'intro/what-is-train-lle' },
+      { title: 'Local Learning Engine', slug: 'intro/local-learning-engine' },
+      { title: 'Why Local ML Matters', slug: 'intro/why-local-ml' },
+      { title: 'What You Will Build', slug: 'intro/what-you-will-build' },
+    ],
   },
   {
-    title: 'Core Concepts',
-    href: '/docs/core-concepts',
+    title: 'Setting Up',
+    items: [
+      { title: 'System Requirements', slug: 'setup/system-requirements' },
+      { title: 'Installing Node.js', slug: 'setup/installing-nodejs' },
+      { title: 'Creating a Project', slug: 'setup/creating-project' },
+      { title: 'Installing train-lle', slug: 'setup/installing-train-lle' },
+      { title: 'Running Your First Script', slug: 'setup/first-script' },
+    ],
   },
   {
-    title: 'CLI Reference',
-    href: '/docs/cli',
+    title: 'Your First Model',
+    items: [
+      { title: 'What is a Model?', slug: 'first-model/what-is-model' },
+      { title: 'Creating an MLP', slug: 'first-model/creating-mlp' },
+      { title: 'Preparing a Dataset', slug: 'first-model/preparing-dataset' },
+      { title: 'Training Your First Model', slug: 'first-model/training-model' },
+      { title: 'Making Predictions', slug: 'first-model/making-predictions' },
+      { title: 'Saving and Loading', slug: 'first-model/saving-loading' },
+    ],
   },
-  {
-    title: 'API Reference',
-    href: '/docs/api',
-  },
-  {
-    title: 'Model Types',
-    href: '/docs/models',
-  },
-  {
-    title: 'Dataset Formats',
-    href: '/docs/datasets',
-  },
-  {
-    title: 'Export System',
-    href: '/docs/export',
-  },
-  {
-    title: 'Examples',
-    href: '/docs/examples',
-  },
-  {
-    title: 'Roadmap',
-    href: '/docs/roadmap',
-  },
-  {
-    title: 'Contributing',
-    href: '/docs/contributing',
-  },
-  {
-    title: 'License',
-    href: '/docs/license',
-  },
+  // Add more sections as needed
 ]
 
-export function Sidebar() {
+export default function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 h-full overflow-y-auto">
-      <div className="p-6">
-        <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
-          train-lle
-        </Link>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-          v0.1.0
-        </p>
-      </div>
-
-      <nav className="px-3">
-        <ul className="space-y-1">
-          {navigation.map((item) => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className={`flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                  pathname === item.href
-                    ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
-                    : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
-                }`}
-              >
-                <ChevronRight className="h-4 w-4 mr-2" />
-                {item.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <aside className="w-64 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 p-4 hidden md:block">
+      <nav className="space-y-6">
+        {sections.map((section) => (
+          <div key={section.title}>
+            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">
+              {section.title}
+            </h3>
+            <ul className="space-y-1">
+              {section.items.map((item) => (
+                <li key={item.slug}>
+                  <Link
+                    href={`/guide/${item.slug}`}
+                    className={`flex items-center px-3 py-2 text-sm rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                      pathname === `/guide/${item.slug}`
+                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                        : 'text-gray-700 dark:text-gray-300'
+                    }`}
+                  >
+                    <ChevronRight className="h-4 w-4 mr-2" />
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </nav>
-
-      <div className="p-6 border-t border-gray-200 dark:border-gray-700 mt-6">
-        <a
-          href="https://github.com/students-dev/train-lle"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-        >
-          View on GitHub →
-        </a>
-      </div>
-    </div>
+    </aside>
   )
 }

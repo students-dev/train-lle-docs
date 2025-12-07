@@ -1,25 +1,16 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import '../styles/globals.css'
-import { ThemeProvider } from '@/components/ThemeProvider'
+import './globals.css'
+import { ThemeProvider } from 'next-themes'
+import Navbar from '@/components/Navbar'
+import Sidebar from '@/components/Sidebar'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'train-lle Documentation',
-  description: 'Local Learning Engine for Node.js - Privacy-first machine learning that runs entirely in your environment',
-  keywords: 'machine learning, Node.js, privacy, local AI, neural networks, JavaScript ML',
-  authors: [{ name: 'train-lle team' }],
-  openGraph: {
-    title: 'train-lle Documentation',
-    description: 'Local Learning Engine for Node.js - Privacy-first machine learning',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'train-lle Documentation',
-    description: 'Local Learning Engine for Node.js - Privacy-first machine learning',
-  },
+  title: 'train-lle Guide',
+  description: 'Local Learning Engine for Node.js - Complete Learning Guide',
 }
 
 export default function RootLayout({
@@ -30,8 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider>
-          {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+            <Navbar />
+            <div className="flex">
+              <Sidebar />
+              <main className="flex-1 px-4 py-8 md:px-8">
+                {children}
+              </main>
+            </div>
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
