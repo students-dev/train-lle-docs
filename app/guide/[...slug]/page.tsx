@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { promises as fs } from 'fs'
 import path from 'path'
-import { compileMDX } from 'next-mdx-remote/rser'
+import { serialize } from 'next-mdx-remote/serialize'
 import { MDXRemote } from 'next-mdx-remote'
 import Callout from '@/components/Callout'
 import PrevNextNav from '@/components/PrevNextNav'
@@ -16,15 +16,11 @@ export default async function GuidePage({ params }: { params: { slug: string[] }
 
   try {
     const source = await fs.readFile(filePath, 'utf8')
-    const { content, frontmatter } = await compileMDX({
-      source,
-      components,
-    })
 
     return (
       <div className="max-w-4xl mx-auto">
         <article className="prose prose-lg dark:prose-invert max-w-none">
-          <MDXRemote {...content} components={components} />
+          <pre>{source}</pre>
         </article>
         <PrevNextNav currentSlug={slug} />
       </div>

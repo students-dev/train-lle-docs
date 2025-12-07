@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { ThemeProvider } from 'next-themes'
+
 import Navbar from '@/components/Navbar'
 import Sidebar from '@/components/Sidebar'
 import Footer from '@/components/Footer'
@@ -19,20 +19,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-            <Navbar />
-            <div className="flex">
-              <Sidebar />
-              <main className="flex-1 px-4 py-8 md:px-8">
-                {children}
-              </main>
-            </div>
-            <Footer />
+        <div className="min-h-screen bg-white text-gray-900">
+          <Navbar />
+          <div className="flex">
+            <Sidebar />
+            <main className="flex-1 px-4 py-8 md:px-8">
+              {children}
+            </main>
           </div>
-        </ThemeProvider>
+          <Footer />
+        </div>
       </body>
     </html>
   )
