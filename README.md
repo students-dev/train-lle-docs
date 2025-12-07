@@ -49,6 +49,10 @@ The built files will be in the `out/` directory, ready for deployment.
 
 See the [Contributing guide](/docs/contributing) for information on how to contribute to the documentation.
 
+## Credits
+
+This documentation website was created by Ramkrishna Bhatt, a student at Milagres PU College Kallinupur and founder of students-dev.
+
 ## License
 
 This documentation is licensed under the Apache License 2.0, matching the train-lle project license.
