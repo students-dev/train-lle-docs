@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" enableSystem>
           <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
             <Navbar />
             <LayoutContent>{children}</LayoutContent>
