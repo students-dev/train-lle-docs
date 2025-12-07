@@ -5,6 +5,7 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import LayoutContent from './LayoutContent'
+import { ThemeProvider } from 'next-themes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,13 +20,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <div className="min-h-screen bg-gray-900 text-white">
-          <Navbar />
-          <LayoutContent>{children}</LayoutContent>
-          <Footer />
-        </div>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+            <Navbar />
+            <LayoutContent>{children}</LayoutContent>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )
