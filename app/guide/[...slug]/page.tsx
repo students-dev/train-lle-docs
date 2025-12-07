@@ -1,13 +1,10 @@
 import { promises as fs } from 'fs'
 import path from 'path'
-import { serialize } from 'next-mdx-remote/serialize'
-import { MDXRemote } from 'next-mdx-remote'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkHtml from 'remark-html'
 import Callout from '@/components/Callout'
 import PrevNextNav from '@/components/PrevNextNav'
-
-const components = {
-  Callout,
-}
 
 export default async function GuidePage({ params }: { params: { slug: string[] } }) {
   const slug = params.slug.join('/')
@@ -22,16 +19,18 @@ export default async function GuidePage({ params }: { params: { slug: string[] }
       throw new Error('Empty file content')
     }
 
-    const mdxSource = await serialize(source, {
-      mdxOptions: {
-        development: process.env.NODE_ENV === 'development'
-      }
-    })
+    // Convert MDX to HTML using remark
+    const processor = unified()
+      .use(remarkParse)
+      .use(remarkHtml, { sanitize: false })
+
+    const htmlContent = await processor.process(source)
+    const htmlString = htmlContent.toString()
 
     return (
       <div className="max-w-4xl mx-auto">
         <article className="prose prose-lg dark:prose-invert max-w-none">
-          <MDXRemote {...mdxSource} components={components} />
+          <div dangerouslySetInnerHTML={{ __html: htmlString }} />
         </article>
         <PrevNextNav currentSlug={slug} />
       </div>
