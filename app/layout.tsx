@@ -5,7 +5,6 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import LayoutContent from './LayoutContent'
-import { ThemeProvider } from 'next-themes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,13 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <div className="min-h-screen bg-gray-900 text-white">
-            <Navbar />
-            <LayoutContent>{children}</LayoutContent>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <div className="min-h-screen bg-gray-900 text-white">
+          <Navbar />
+          <LayoutContent>{children}</LayoutContent>
+          <Footer />
+        </div>
       </body>
     </html>
   )
