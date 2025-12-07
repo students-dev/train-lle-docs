@@ -11,11 +11,22 @@ const components = {
 
 export default async function GuidePage({ params }: { params: { slug: string[] } }) {
   const slug = params.slug.join('/')
-  const filePath = path.join(process.cwd(), 'content', `${slug}.mdx`)
+  const filePath = path.join(process.cwd(), 'app', 'content', `${slug}.mdx`)
 
   try {
+    // Check if file exists
+    await fs.access(filePath)
     const source = await fs.readFile(filePath, 'utf8')
-    const mdxSource = await serialize(source)
+
+    if (!source || source.trim() === '') {
+      throw new Error('Empty file content')
+    }
+
+    const mdxSource = await serialize(source, {
+      mdxOptions: {
+        development: process.env.NODE_ENV === 'development'
+      }
+    })
 
     return (
       <div className="max-w-4xl mx-auto">
@@ -26,7 +37,15 @@ export default async function GuidePage({ params }: { params: { slug: string[] }
       </div>
     )
   } catch (error) {
-    console.error(error)
-    return <div>Page not found</div>
+    console.error(`Error loading page ${slug}:`, error)
+    return (
+      <div className="max-w-4xl mx-auto py-8">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Page Not Found</h1>
+          <p className="text-gray-600">The requested page could not be loaded.</p>
+          <p className="text-sm text-gray-500 mt-2">Slug: {slug}</p>
+        </div>
+      </div>
+    )
   }
 }
