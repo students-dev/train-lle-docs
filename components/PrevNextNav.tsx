@@ -30,13 +30,13 @@ export default function PrevNextNav({ currentSlug }: PrevNextNavProps) {
   const next = currentIndex < navigation.length - 1 ? navigation[currentIndex + 1] : null
 
   return (
-    <nav className="flex justify-between items-center mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+    <nav className="flex justify-between items-center pt-6">
       {prev ? (
         <Link
           href={`/guide/${prev}`}
-          className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+          className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors"
         >
-          <ChevronLeft className="h-4 w-4 mr-1" />
+          <ChevronLeft className="h-4 w-4 mr-2" />
           Previous
         </Link>
       ) : (
@@ -45,10 +45,10 @@ export default function PrevNextNav({ currentSlug }: PrevNextNavProps) {
       {next ? (
         <Link
           href={`/guide/${next}`}
-          className="flex items-center text-blue-600 dark:text-blue-400 hover:underline"
+          className="flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
         >
           Next
-          <ChevronRight className="h-4 w-4 ml-1" />
+          <ChevronRight className="h-4 w-4 ml-2" />
         </Link>
       ) : (
         <div />

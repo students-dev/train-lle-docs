@@ -153,7 +153,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-gray-50 border-r border-gray-200 p-4 hidden md:block overflow-y-auto h-screen">
+    <aside className="w-64 bg-white border-r border-gray-200 p-4 hidden md:block overflow-y-auto sticky top-16 h-screen">
       <nav className="space-y-2">
         {sections.map((section) => (
           <div key={section.title}>
