@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import { promises as fs } from 'fs'
 import path from 'path'
 import { serialize } from 'next-mdx-remote/serialize'
@@ -16,21 +15,18 @@ export default async function GuidePage({ params }: { params: { slug: string[] }
 
   try {
     const source = await fs.readFile(filePath, 'utf8')
+    const mdxSource = await serialize(source)
 
     return (
       <div className="max-w-4xl mx-auto">
         <article className="prose prose-lg dark:prose-invert max-w-none">
-          <pre>{source}</pre>
+          <MDXRemote {...mdxSource} components={components} />
         </article>
         <PrevNextNav currentSlug={slug} />
       </div>
     )
-  } catch {
-    notFound()
+  } catch (error) {
+    console.error(error)
+    return <div>Page not found</div>
   }
-}
-
-export async function generateStaticParams() {
-  // This would need to be implemented to generate all paths
-  return []
 }
